@@ -29,6 +29,8 @@ class TestHighScoringWords(unittest.TestCase):
         self.score._create_word_score_hash(self.score.valid_words)
         self.assertEqual(self.score.word_scores['aardvarks'], 17)
 
-    # def test_reverse_and_sort(self):
-    #     highest_tuples = self.score._reverse_and_sort(self.score.word_scores)
-    #     self.assertEqual(highest_tuples, ('aardvarks', 17))
+    def test_reverse_and_sort(self):
+        self.score._create_word_score_hash(self.score.valid_words)
+        highest_tuples = self.score._reverse_and_sort(self.score.word_scores)
+        self.assertEqual(highest_tuples[0], ('aardvarks', 17))
+        self.assertEqual(highest_tuples[1], ('aardwolves', 17))
