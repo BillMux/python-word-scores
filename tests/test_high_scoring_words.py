@@ -29,6 +29,11 @@ class TestHighScoringWords(unittest.TestCase):
         self.score._create_word_score_hash(self.score.valid_words)
         self.assertEqual(self.score.word_scores['aardvarks'], 17)
 
+    def test_does_not_exceed_max_leaderboard_limit(self):
+        self.score_2 = HighScoringWords('wordlist.txt')
+        top_100 = self.score_2.build_leaderboard_for_word_list()
+        self.assertEqual(len(top_100), 100)
+
     def test_reverse_and_sort(self):
         self.score._create_word_score_hash(self.score.valid_words)
         highest_tuples = self.score._reverse_and_sort(self.score.word_scores)
