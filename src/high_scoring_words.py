@@ -3,15 +3,12 @@
 
 # Python 3.7.2
 
-__author__ = 'codesse'
-
 import operator
 
 class HighScoringWords:
     MAX_LEADERBOARD_LENGTH = 100  # the maximum number of items that can appear in the leaderboard
     MIN_WORD_LENGTH = 3  # words must be at least this many characters long
     letter_values = {}
-    # valid_words = []
 
     def __init__(self, validwords='wordlist.txt', lettervalues='letterValues.txt'):
         """
