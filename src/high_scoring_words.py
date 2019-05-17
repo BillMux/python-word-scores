@@ -33,12 +33,10 @@ class HighScoringWords:
         MAX_LEADERBOARD_LENGTH words from the complete set of valid words.
         :return:
         """
-        self._create_word_score_hash(self.valid_words)
+        self._create_word_score_dict(self.valid_words, self.word_scores)
         word_score_tuples = self._reverse_and_sort(self.word_scores)
         self.leaderboard = [i[0] for i in word_score_tuples][:100]
         return self.leaderboard
-
-
 
     def build_leaderboard_for_letters(self, starting_letters):
         """
@@ -56,18 +54,24 @@ class HighScoringWords:
         words that are valid against the contents of the wordlist.txt file.
         :return:
         """
+        self.build_leaderboard_for_word_list()
+        output = []
+        for word in self.leaderboard:
+            if ''.join(word[:len(starting_letters)]) == starting_letters:
+                output.append(word)
+        return output
 
     # private
 
-    def _create_word_score_hash(self, valid):
+    def _create_word_score_dict(self, valid, dictionary):
         """
         Creates a dictionary containing all valid words and their
         respective scores.
         """
         for word in valid:
-            self.word_scores[word] = 0
+            dictionary[word] = 0
             for letter in word:
-                self.word_scores[word] += self.letter_values[letter]
+                dictionary[word] += self.letter_values[letter]
 
     def _reverse_and_sort(self, scores):
         """
