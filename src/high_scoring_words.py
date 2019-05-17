@@ -35,7 +35,7 @@ class HighScoringWords:
         """
         self._create_word_score_hash(self.valid_words)
         word_score_tuples = self._reverse_and_sort(self.word_scores)
-        self.leaderboard = [i[0] for i in word_score_tuples]
+        self.leaderboard = [i[0] for i in word_score_tuples][:100]
         return self.leaderboard
 
 
@@ -61,7 +61,7 @@ class HighScoringWords:
 
     def _create_word_score_hash(self, valid):
         """
-        Helper method creates a dictionary containing all valid words and their
+        Creates a dictionary containing all valid words and their
         respective scores.
         """
         for word in valid:
@@ -71,7 +71,7 @@ class HighScoringWords:
 
     def _reverse_and_sort(self, scores):
         """
-        Helper method sorts the word-score dictionary in reverse order of score.
+        Sorts the word-score dictionary in reverse order of score.
         Words of equal scores are sorted alphabetically.
         """
         return sorted(scores.items(), key=operator.itemgetter(1), reverse=True)
