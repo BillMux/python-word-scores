@@ -24,7 +24,7 @@ class HighScoringWords:
 
         with open(lettervalues) as file:
             for line in file:
-                (key, val) = line.split(':')
+                key, val = line.split(':')
                 self.letter_values[str(key).strip().lower()] = int(val)
 
     def build_leaderboard_for_word_list(self):
@@ -54,12 +54,16 @@ class HighScoringWords:
         words that are valid against the contents of the wordlist.txt file.
         :return:
         """
-        self.build_leaderboard_for_word_list()
-        output = []
-        for word in self.leaderboard:
-            if ''.join(word[:len(starting_letters)]) == starting_letters:
-                output.append(word)
-        return output
+        # self.build_leaderboard_for_word_list()
+        # for word in self.valid_words:
+        arr = []
+        output = {}
+        for word in self.valid_words:
+            if word[:len(starting_letters)] == starting_letters:
+                arr.append(word)
+                self._create_word_score_dict(arr, output)
+        tuples = self._reverse_and_sort(output)
+        return [i[0] for i in tuples][:100]
 
     # private
 

@@ -28,7 +28,8 @@ class TestHighScoringWords(unittest.TestCase):
         self.assertEqual(highest[1], 'aardwolves')
 
     def test_word_score_hash(self):
-        self.test_list._create_word_score_dict(self.test_list.valid_words, self.test_list.word_scores)
+        words, scores = self.test_list.valid_words, self.test_list.word_scores
+        self.test_list._create_word_score_dict(words, scores)
         self.assertEqual(self.test_list.word_scores['aardvarks'], 17)
 
     def test_does_not_exceed_max_leaderboard_limit(self):
@@ -39,7 +40,8 @@ class TestHighScoringWords(unittest.TestCase):
         self.assertEqual(self.top_100[-1], 'cyclohexylamines')
 
     def test_reverse_and_sort(self):
-        self.test_list._create_word_score_dict(self.test_list.valid_words, self.test_list.word_scores)
+        words, scores = self.test_list.valid_words, self.test_list.word_scores
+        self.test_list._create_word_score_dict(words, scores)
         highest = self.test_list._reverse_and_sort(self.test_list.word_scores)
         self.assertEqual(highest[0], ('aardvarks', 17))
         self.assertEqual(highest[1], ('aardwolves', 17))
@@ -50,4 +52,4 @@ class TestHighScoringWords(unittest.TestCase):
         tests = self.long_list.build_leaderboard_for_letters('test')
         self.assertEqual(first_5, ['aardwolves', 'aardwolf'])
         self.assertEqual(psychos[0], 'psychophysiologically')
-        self.assertEqual(tests[0], 'testatrix')
+        self.assertEqual(tests[:2], ['testamentary', 'testifying'])
