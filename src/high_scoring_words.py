@@ -6,18 +6,21 @@
 import operator
 
 class HighScoringWords:
-    MAX_LEADERBOARD_LENGTH = 100  # the maximum number of items that can appear in the leaderboard
-    MIN_WORD_LENGTH = 3  # words must be at least this many characters long
+    CHART_LENGTH = 100
+    MIN_WORD_LENGTH = 3
     letter_values = {}
 
     def __init__(self, validwords='wordlist.txt', lettervalues='letterValues.txt'):
         """
-        Initialise the class with complete set of valid words and letter values by parsing text files containing the data
-        :param validwords: a text file containing the complete set of valid words, one word per line
-        :param lettervalues: a text file containing the score for each letter in the format letter:score one per line
+        Initialise the class with complete set of valid words and letter values
+        by parsing text files containing the data
+        :param validwords: a text file containing the complete set of valid
+        words, one word per line
+        :param lettervalues: a text file containing the score for each letter in
+        the format letter:score one per line
         :return:
         """
-        self.leaderboard = [] # initialise an empty leaderboard
+        self.leaderboard = []
         self.word_scores = {}
         with open(validwords) as file:
             self.valid_words = file.read().splitlines()
@@ -30,12 +33,12 @@ class HighScoringWords:
     def build_leaderboard_for_word_list(self):
         """
         Build a leaderboard of the top scoring
-        MAX_LEADERBOARD_LENGTH words from the complete set of valid words.
+        CHART_LENGTH words from the complete set of valid words.
         :return:
         """
         self._create_word_score_dict(self.valid_words, self.word_scores)
-        word_score_tuples = self._reverse_and_sort(self.word_scores)
-        self.leaderboard = [i[0] for i in word_score_tuples][:100]
+        word_and_score = self._reverse_and_sort(self.word_scores)
+        self.leaderboard = [i[0] for i in word_and_score][:self.CHART_LENGTH]
         return self.leaderboard
 
     def build_leaderboard_for_letters(self, starting_letters):
@@ -49,21 +52,19 @@ class HighScoringWords:
         There is only one l in the starting string but bull contains two l
         characters.
         Words are ordered in the leaderboard by their score (with the highest
-        score first) and then alphabetically for words which have the same score.
+        score first) and then alphabetically for words which have the same score
         :param starting_letters: a random string of letters from which to build
         words that are valid against the contents of the wordlist.txt file.
         :return:
         """
-        # self.build_leaderboard_for_word_list()
-        # for word in self.valid_words:
-        arr = []
+        words_of_starting_letters = []
         output = {}
         for word in self.valid_words:
             if word[:len(starting_letters)] == starting_letters:
-                arr.append(word)
-                self._create_word_score_dict(arr, output)
+                words_of_starting_letters.append(word)
+                self._create_word_score_dict(words_of_starting_letters, output)
         tuples = self._reverse_and_sort(output)
-        return [i[0] for i in tuples][:100]
+        return [i[0] for i in tuples][:self.CHART_LENGTH]
 
     # private
 
